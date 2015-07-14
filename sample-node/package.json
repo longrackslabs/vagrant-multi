@@ -1,0 +1,14 @@
+{
+  "name": "hello_world",
+  "description": "hello world node test app",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "3.3.8",
+    "mysql": "2.0.0-alpha9"
+  },
+  "scripts": {
+    "start": "node ./app.js"
+  }
+}
+
