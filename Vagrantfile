@@ -1,6 +1,6 @@
 # vagrant init hashicorp/precise64
 Vagrant.configure(2) do |config|
-  config.vm.box = "hashicorp/precise64"
+  config.vm.box = "puppetlabs/ubuntu-14.04-64-puppet"
 
   # Puppet configs
   config.vm.provision "puppet" do |puppet|
