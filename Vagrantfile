@@ -1,6 +1,10 @@
 # vagrant init hashicorp/precise64
 Vagrant.configure(2) do |config|
   config.vm.box = "puppetlabs/ubuntu-14.04-64-puppet"
+  config.librarian_puppet.puppetfile_dir = "puppet"
+  config.librarian_puppet.placeholder_filename = ".MYPLACEHOLDER"
+  config.librarian_puppet.use_v1_api = '1'
+  config.librarian_puppet.destructive = false
 
   # Puppet configs
   config.vm.provision "puppet" do |puppet|
