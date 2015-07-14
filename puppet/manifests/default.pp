@@ -21,3 +21,7 @@ file { "/var/www/html/sample-webapp":
 
 class { 'nodejs': }
 
+class { '::mysql::server':
+  root_password  => 'foo',
+}
+
