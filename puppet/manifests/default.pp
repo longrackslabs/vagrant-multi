@@ -19,3 +19,5 @@ file { "/var/www/sample-webapp":
   notify => Service["apache2"],
 }
 
+class { 'nodejs': }
+
