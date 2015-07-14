@@ -3,3 +3,5 @@ puppet/modules
 puppet/.librarian
 puppet/.tmp
 puppet/Puppetfile.lock
+npm-debug.log
+sample-node/node_modules
