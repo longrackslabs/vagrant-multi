@@ -82,6 +82,6 @@ class { 'npm-install': }
 
 exec { 'start sample node app':
   cwd => "/opt/nodejs/sample-node",
-  command => "/usr/bin/pm2 --silent start app.js 2>&1",
+  command => "/usr/bin/pm2 --silent start app.js 2>&1&",
   require => Class["npm-install"]
 }
