@@ -23,10 +23,29 @@ file { "/var/www/html/sample-webapp":
 # Node.js app stuff
 class { 'nodejs': }
 
-# Then install the app bits
-class sample-node-app {
+# then pm2
+class { 'pm2-gp': }
 
-  file {["/opt/nodejs/sample-node"]:,
+class pm2-gp {
+
+  file {"/opt/nodejs":,
+    ensure => "directory",
+    mode => 775,
+    before => Exec['install npm package pm2']
+  }
+
+  exec { 'install npm package pm2':
+    command => "/usr/bin/npm install --unsafe-perm -g pm2",
+    require => Class["nodejs"],
+  }
+}
+
+class { 'install-sample-node-app': }
+
+# Then install the app bits
+class install-sample-node-app {
+
+  file {"/opt/nodejs/sample-node":,
     ensure => "directory",
     mode => 775,
   }
@@ -42,46 +61,29 @@ class sample-node-app {
     target => "/vagrant/sample-node/package.json",
     require => File["/opt/nodejs/sample-node"],
   }
-}
-
-# then pm2
-class { 'pm2-gp': }
-
-class pm2-gp {
-
-  file {"/opt/nodejs":,
-    ensure => "directory",
-    mode => 775,
-  }
-
-  exec { 'install npm package pm2':
-    command => "/usr/bin/npm install --unsafe-perm -g pm2",
-    require => [
-      Class["nodejs"], File["/opt/nodejs"]
-    ]
-  }
-}
-
-class {'sample-node-app':
-  require => [
-    Class["pm2-gp"],
-  ]
-}
-
-class npm-install {
 
   exec { "npm install" :
     cwd => "/opt/nodejs/sample-node",
     user => "root",
     path => "/usr/bin",
-    require => Class["sample-node-app"],
+    require => [
+      File["/opt/nodejs/sample-node"],
+      File["/opt/nodejs/sample-node/app.js"],
+      File["/opt/nodejs/sample-node/package.json"],
+      Class["pm2-gp"]
+    ]
   }
 }
 
-class { 'npm-install': }
-
-exec { 'start sample node app':
-  cwd => "/opt/nodejs/sample-node",
-  command => "/usr/bin/pm2 --silent start app.js 2>&1&",
-  require => Class["npm-install"]
+# Install node, pm2, app, and then start it
+class start-sample-node-app {
+  exec { 'start sample node app':
+    cwd => "/opt/nodejs/sample-node",
+    command => "/usr/bin/pm2 --silent start app.js 2>&1&",
+    require => [
+      Class["install-sample-node-app"]
+    ]
+  }
 }
+
+class { 'start-sample-node-app': }
