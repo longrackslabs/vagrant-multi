@@ -46,5 +46,14 @@ class sample-node-app {
   }
 }
 
-class {'sample-node-app':}
+class {'sample-node-app':
+  require => Class["nodejs"],
 
+}
+
+exec { "npm install" :
+  cwd => "/opt/nodejs/sample-node",
+  user => "root",
+  path => "/usr/bin",
+  require => Class["sample-node-app"],
+}
