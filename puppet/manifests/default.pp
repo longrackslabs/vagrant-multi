@@ -37,10 +37,6 @@ class pm2-gp {
 class { 'nodejs': }
 class { 'pm2-gp': }
 
-class { '::mysql::server':
-  root_password  => 'foo',
-}
-
 class sample-node-app {
 
   file {["/opt/nodejs/sample-node"]:,
