@@ -19,8 +19,23 @@ file { "/var/www/html/sample-webapp":
   notify => Service["apache2"],
 }
 
+# pm2
+class pm2-gp {
+
+  file {"/opt/nodejs":,
+    ensure => "directory",
+    mode => 775,
+  }
+
+  exec { 'install npm package pm2':
+    command => "/usr/bin/sudo /usr/bin/npm install --unsafe-perm -g pm2",
+    require => File["/opt/nodejs"],
+  }
+} 
+
 # Node.js app stuff
 class { 'nodejs': }
+class { 'pm2-gp': }
 
 class { '::mysql::server':
   root_password  => 'foo',
@@ -28,7 +43,7 @@ class { '::mysql::server':
 
 class sample-node-app {
 
-  file {["/opt/nodejs", "/opt/nodejs/sample-node"]:,
+  file {["/opt/nodejs/sample-node"]:,
     ensure => "directory",
     mode => 775,
   }
@@ -47,13 +62,26 @@ class sample-node-app {
 }
 
 class {'sample-node-app':
-  require => Class["nodejs"],
-
+  require => [
+    Class["nodejs"],
+    Class["pm2-gp"],
+  ]
 }
 
-exec { "npm install" :
+class npm-install {
+
+  exec { "npm install" :
+    cwd => "/opt/nodejs/sample-node",
+    user => "root",
+    path => "/usr/bin",
+    require => Class["sample-node-app"],
+  }
+}
+
+class { 'npm-install': }
+
+exec { 'start sample node app':
   cwd => "/opt/nodejs/sample-node",
-  user => "root",
-  path => "/usr/bin",
-  require => Class["sample-node-app"],
+  command => "/usr/bin/pm2 --silent start app.js 2>&1",
+  require => Class["npm-install"]
 }
