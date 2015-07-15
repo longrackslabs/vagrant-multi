@@ -10,12 +10,14 @@ var connection = mysql.createConnection({
 });
 
 app.get('/', function(req, res) {
+  var now = new Date();
+
   res.writeHead(200, {
     'Transfer-Encoding': 'chunked',
     'Content-Type': 'text/plain; charset="utf-8'
   });
 
-  res.write("Hello World!");
+  res.write("Hello World! " + now.toDateString() + ":" + now.toTimeString());
   res.write("\n\nNow connecting to mysql...");
 
   connection.connect(function(err) {
