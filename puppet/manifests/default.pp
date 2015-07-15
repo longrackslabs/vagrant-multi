@@ -19,24 +19,11 @@ file { "/var/www/html/sample-webapp":
   notify => Service["apache2"],
 }
 
-# pm2
-class pm2-gp {
-
-  file {"/opt/nodejs":,
-    ensure => "directory",
-    mode => 775,
-  }
-
-  exec { 'install npm package pm2':
-    command => "/usr/bin/npm install --unsafe-perm -g pm2",
-    require => File["/opt/nodejs"],
-  }
-} 
 
 # Node.js app stuff
 class { 'nodejs': }
-class { 'pm2-gp': }
 
+# Then install the app bits
 class sample-node-app {
 
   file {["/opt/nodejs/sample-node"]:,
@@ -57,9 +44,26 @@ class sample-node-app {
   }
 }
 
+# then pm2
+class { 'pm2-gp': }
+
+class pm2-gp {
+
+  file {"/opt/nodejs":,
+    ensure => "directory",
+    mode => 775,
+  }
+
+  exec { 'install npm package pm2':
+    command => "/usr/bin/npm install --unsafe-perm -g pm2",
+    require => [
+      Class["nodejs"], File["/opt/nodejs"]
+    ]
+  }
+}
+
 class {'sample-node-app':
   require => [
-    Class["nodejs"],
     Class["pm2-gp"],
   ]
 }
