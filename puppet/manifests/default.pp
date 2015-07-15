@@ -28,7 +28,7 @@ class pm2-gp {
   }
 
   exec { 'install npm package pm2':
-    command => "/usr/bin/sudo /usr/bin/npm install --unsafe-perm -g pm2",
+    command => "/usr/bin/npm install --unsafe-perm -g pm2",
     require => File["/opt/nodejs"],
   }
 } 
