@@ -2,6 +2,4 @@ forge "https://forge.puppetlabs.com"
 
 mod 'puppetlabs-stdlib'
 mod 'puppetlabs-apt'
-mod 'puppetlabs-mysql'
-mod 'puppetlabs-nodejs'
-mod 'neillturner-pm2'
+mod 'puppetlabs-ruby'
