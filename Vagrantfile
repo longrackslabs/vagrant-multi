@@ -6,16 +6,18 @@ Vagrant.configure(2) do |config|
   config.librarian_puppet.use_v1_api = '1'
   config.librarian_puppet.destructive = false
 
+
   # Puppet configs
   config.vm.provision "puppet" do |puppet|
 	puppet.manifests_path = "puppet/manifests"
-	puppet.manifest_file = "default.pp"
+#	puppet.manifest_file = "default.pp"
+	puppet.manifest_file = "ruby.pp"
 
 	puppet.module_path = "puppet/modules"
   end
 
   config.vm.network :forwarded_port, guest: 80, host: 3080
-  config.vm.network :forwarded_port, guest: 3000, host: 3000
+  config.vm.network :forwarded_port, guest: 4567, host: 4567
 end
 
 
