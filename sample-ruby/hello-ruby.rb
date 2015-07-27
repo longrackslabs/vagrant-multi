@@ -9,18 +9,17 @@ get '/' do
   'Hello World: Ruby From Vagrant! ' + time1.inspect
 end
 
-class DudeQuoteServer
-  attr_reader :quotes
-  def initialize
-    @quotes = %w(Just one thing, Dude. Do ya have to use so many cuss words?)
-    @quotes.concat %w(Hey, this is a private residence man.)
-  end
-end
-
 # Sinatra Part
+quotes = [
+  'Just one thing, Dude. Do ya have to use so many cuss words?',
+  'Hey, this is a private residence man.',
+  'Hello. Mein dizbatcher says zere iss somezing wrong mit deine kable.'
+]
+
 get '/quote' do
   return_message = {}
-  return_message[:quote] = 'Hello. Mein dizbatcher says zere iss somezing wrong mit deine kable.'
+
+  return_message[:quote] = quotes.shuffle.first
 
   return_message.to_json
 end
