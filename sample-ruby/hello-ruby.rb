@@ -1,7 +1,7 @@
 # hello-ruby.rb
 require 'sinatra'
 require 'json'
-
+require 'sinatra/jsonp'
 set bind: '0.0.0.0'
 
 get '/' do
@@ -25,9 +25,5 @@ quotes = [
 ]
 
 get '/quote' do
-  return_message = {}
-
-  return_message[:quote] = quotes.shuffle.first
-
-  return_message.to_json
+  jsonp quotes.shuffle.first
 end
