@@ -1,1 +1,31 @@
-<h1>Web: Hello, world!</h1>
+<h1>George's Lebowski Quote Generator Page!</h1>
+<p id="quote">
+
+</p>
+
+<html>
+   <head>
+     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+     <script language="javascript">
+      function getQuote() {
+        $.ajax({
+           url: "http://localhost:4567/quote",
+           data: "", //ur data to be sent to server
+           contentType: "application/json; charset=utf-8",
+           crossDomain: true,
+           dataType: 'jsonp',
+           type: "GET",
+           success: function (data) {
+              document.getElementById("quote").innerHTML ="<p>" + data + "</p>";
+           },
+           error: function (x, y, z) {
+              alert(x.responseText +"  " +x.status);
+           }
+       });
+    }
+    </script>
+   </head>
+   <body>
+      <button onclick="javascript:getQuote();">Get Quote</button>
+   </body>
+</html>
