@@ -1,7 +1,7 @@
 # vagrant init hashicorp/precise64
 Vagrant.configure(2) do |config|
   config.vm.box = "puppetlabs/ubuntu-14.04-64-puppet"
-  
+
   config.librarian_puppet.puppetfile_dir = "puppet"
   config.librarian_puppet.placeholder_filename = ".MYPLACEHOLDER"
   config.librarian_puppet.use_v1_api = '1'
@@ -12,7 +12,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision "puppet" do |puppet|
   	puppet.manifests_path = "puppet/manifests"
   	puppet.manifest_file = "default.pp"
-
+    puppet.options<< '--verbose'
   	puppet.module_path = "puppet/modules"
   end
 
