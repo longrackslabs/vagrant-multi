@@ -39,11 +39,13 @@ Vagrant.configure("2") do |config|
       # Memory
       memory = node[:ram] ? node[:ram] : 256;
 
+      # Puppet library setup
       node_config.librarian_puppet.puppetfile_dir = "puppet"
       node_config.librarian_puppet.placeholder_filename = ".MYPLACEHOLDER"
       node_config.librarian_puppet.use_v1_api = '1'
       node_config.librarian_puppet.destructive = false
 
+      # Setup provider with params from node
       node_config.vm.provider :vmware_fusion do |vb|
         vb.customize [
           'modifyvm', :id,
