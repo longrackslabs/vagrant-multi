@@ -7,6 +7,7 @@ puppet_nodes = [
     :hostname => 'web',
     :ip => '172.16.32.10',
     :box => 'puppetlabs/ubuntu-14.04-64-puppet',
+    :manifest => 'web.pp',
     :fwdguest => 80,
     :fwdhost => 3080,
     :ram => 512
@@ -15,6 +16,7 @@ puppet_nodes = [
     :hostname => 'data',
     :ip => '172.16.32.11',
     :box => 'puppetlabs/ubuntu-14.04-64-puppet',
+    :manifest => 'data.pp',
     :fwdguest => 4567,
     :fwdhost => 4567,
     :ram => 512
@@ -53,6 +55,7 @@ Vagrant.configure("2") do |config|
       # Puppet configs
       node_config.vm.provision :puppet do |puppet|
   	    puppet.manifests_path = "puppet/manifests"
+        puppet.manifest_file = node[:manifest]
         puppet.options = "--verbose"
   	    puppet.module_path = "puppet/modules"
       end
