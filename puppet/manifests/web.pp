@@ -1,22 +1,13 @@
 
-exec { "apt-get update":
-    command => "/usr/bin/apt-get update",
+node 'web' {
+  class { 'apache': }             # use apache module
+  apache::vhost { 'slalom.vm':  # define vhost resource
+    port    => '80',
+    docroot => '/var/www/html'
+  }
 }
-
-# Web server, web app, etc.
-package { "apache2":
-  ensure => present,
-  require => Exec["apt-get update"],
-}
-
-service { "apache2":
-  ensure => running,
-  require => Package["apache2"],
-}
-
 file { "/var/www/html/sample-webapp":
   ensure => "link",
   target => "/vagrant/sample-webapp",
-  require => Package["apache2"],
-  notify => Service["apache2"],
+  require => Class["apache"],
 }

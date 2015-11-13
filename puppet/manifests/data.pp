@@ -1,20 +1,4 @@
 
-exec { "apt-get update":
-    command => "/usr/bin/apt-get update",
-}
-
-# Ruby stuff
-class ruby {
-  package { "build-essential":
-    ensure => present,
-    require => Exec["apt-get update"],
-  }
-
-  package { "ruby":
-    ensure => present,
-    require => Exec["apt-get update"],
-  }
-}
 
 class sinatra {
   package { 'sinatra' :
@@ -73,7 +57,11 @@ include apt
 
 
 class { 'sinatra': }
-class { 'ruby': }
+
+# Ruby stuff
+class { 'ruby':
+  gems_version  => 'latest'
+}
 
 class { 'install-sample-ruby-app':
   require => [
