@@ -12,17 +12,22 @@ puppet_nodes = [
     :fwdhost => 3080,
     :ram => 512
   },
-  {
-#    :hostname => 'data',
-#    :box => 'slalompdx/centos-7.1-puppet',
-#    :manifest => 'data.pp',
-#    :fwdguest => 4567,
-#    :fwdhost => 4567,
-#    :ram => 512
-#    },
+   {
+    :hostname => 'data',
+    :box => 'slalompdx/centos-7.1-puppet',
+    :manifest => 'data.pp',
+    :fwdguest => 4567,
+    :fwdhost => 4567,
+    :ram => 512
+    },
 ]
 
+
+
 Vagrant.configure("2") do |config|
+  # config.r10k.puppet_dir = 'puppet' # the parent directory that contains your module directory and Puppetfile
+  # config.r10k.puppetfile_path = 'puppet/Puppetfile' # the path to your Puppetfile, within the repo
+
   puppet_nodes.each do |node|
     config.vm.define node[:hostname] do |node_config|
       # Basic box setup

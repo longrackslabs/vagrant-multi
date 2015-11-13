@@ -53,9 +53,6 @@ upstart::job { 'sample_ruby_service':
     require        => Class['install-sample-ruby-app']
 }
 
-include apt
-
-
 class { 'sinatra': }
 
 # Ruby stuff
