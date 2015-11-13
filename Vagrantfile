@@ -14,6 +14,7 @@ puppet_nodes = [
   },
    {
     :hostname => 'data',
+    :ip => '172.16.32.21',
     :box => 'slalompdx/centos-7.1-puppet',
     :manifest => 'data.pp',
     :fwdguest => 4567,

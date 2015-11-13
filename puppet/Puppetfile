@@ -3,4 +3,3 @@ forge "https://forge.puppetlabs.com"
 mod 'puppetlabs-apache'
 mod 'puppetlabs-ruby'
 mod 'puppetlabs-stdlib'
-mod 'spantree-upstart'
