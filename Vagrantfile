@@ -41,6 +41,10 @@ Vagrant.configure("2") do |config|
         node_config.vm.network :forwarded_port, guest: node[:fwdguest], host: node[:fwdhost]
       end
 
+      if node[:sshhost]
+        node_config.vm.network :forwarded_port, guest: node[:sshguest], host: node[:sshhost]
+      end
+
       # Memory
       memory = node[:ram] ? node[:ram] : 256;
 
