@@ -49,20 +49,18 @@ class sinatra-jsonp {
 
 class {'sinatra-jsonp':}
 
-#class { 'ansible':
-#  ensure => master
-#}
-#class { 'ansible':}
-
-
 # Ruby stuff
 class { 'ruby':
-  gems_version  => 'latest'
+  version => '1.9.3',
+  gems_version => 'latest',
 }
+
+include ruby::dev
 
 class { 'install-data-app':
   require => [
     Class['ruby'],
     Class['sinatra'],
+    Class['ruby::dev']
   ],
 }

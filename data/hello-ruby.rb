@@ -1,3 +1,6 @@
+require 'rubygems'
+require 'bundler/setup'
+
 # hello-ruby.rb
 require 'sinatra'
 require 'json'
