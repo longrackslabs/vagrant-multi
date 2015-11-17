@@ -5,7 +5,7 @@ domain = 'slalom.vm'
 puppet_nodes = [
   {
     :hostname => 'web',
-    :ip => '172.16.32.20',
+    :ip => '127.0.0.1',
     :box => 'slalompdx/centos-7.1-puppet',
     :manifest => 'web.pp',
     :fwdguest => 80,
@@ -14,7 +14,7 @@ puppet_nodes = [
   },
    {
     :hostname => 'data',
-    :ip => '172.16.32.21',
+    :ip => '127.0.0.1',
     :box => 'slalompdx/centos-7.1-puppet',
     :manifest => 'data.pp',
     :fwdguest => 4567,
@@ -30,6 +30,11 @@ Vagrant.configure("2") do |config|
   # config.r10k.puppetfile_path = 'puppet/Puppetfile' # the path to your Puppetfile, within the repo
 
   puppet_nodes.each do |node|
+    config.hostmanager.enabled = true
+    config.hostmanager.manage_host = true
+    config.hostmanager.ignore_private_ip = false
+    config.hostmanager.include_offline = true
+
     config.vm.define node[:hostname] do |node_config|
       # Basic box setup
       node_config.vm.box = node[:box]
