@@ -6,8 +6,8 @@ node 'web' {
     docroot => '/var/www/html'
   }
 }
-file { "/var/www/html/sample-webapp":
+file { "/var/www/html/web":
   ensure => "link",
-  target => "/vagrant/sample-webapp",
+  target => "/vagrant/web",
   require => Class["apache"],
 }
