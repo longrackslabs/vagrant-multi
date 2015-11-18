@@ -1,0 +1,4 @@
+source 'http://rubygems.org'
+require 'bundler'
+gem 'serverspec'
+gem 'rake', '10.4.2'
