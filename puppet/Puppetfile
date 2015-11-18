@@ -3,6 +3,9 @@ forge "https://forge.puppetlabs.com"
 mod 'puppetlabs-apache'
 mod 'puppetlabs-ruby'
 mod 'puppetlabs-stdlib'
+mod 'puppetlabs-gcc'
+mod 'camptocamp-openssl'
+mod 'puppetlabs-passenger'
 mod 'ansible',
   :git => 'https://github.com/nvogel/puppet-ansible',
   :ref => '3.0.0'

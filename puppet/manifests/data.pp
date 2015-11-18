@@ -1,4 +1,19 @@
 
+node 'data' {
+  class { 'apache': }             # use apache module
+
+  apache::vhost { 'slalom.vm':  # define vhost resource
+    port    => '80',
+    docroot => '/var/www/html'
+  }
+
+  file { "/var/www/html/index.html":
+    ensure => "link",
+    target => "/vagrant/data/html/index.html",
+  }
+
+  # class {'passenger':}
+}
 
 # Then install the app bits
 class install-data-app {
@@ -56,6 +71,8 @@ class { 'ruby':
 }
 
 include ruby::dev
+
+
 
 class { 'install-data-app':
   require => [

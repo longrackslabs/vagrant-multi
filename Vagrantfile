@@ -19,6 +19,8 @@ puppet_nodes = [
     :manifest => 'data.pp',
     :fwdguest => 4567,
     :fwdhost => 4567,
+    :httpguest => 80,
+    :httphost => 4080,
     :ram => 512
     },
 ]
@@ -46,8 +48,8 @@ Vagrant.configure("2") do |config|
         node_config.vm.network :forwarded_port, guest: node[:fwdguest], host: node[:fwdhost]
       end
 
-      if node[:sshhost]
-        node_config.vm.network :forwarded_port, guest: node[:sshguest], host: node[:sshhost]
+      if node[:httphost]
+        node_config.vm.network :forwarded_port, guest: node[:httpguest], host: node[:httphost]
       end
 
       # Memory
