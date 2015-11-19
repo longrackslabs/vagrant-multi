@@ -60,3 +60,4 @@ log/*
 tmp/*
 data/spec-tests/vendor/*
 web/spec-tests/vendor/*
+data/spec-tests/gems/*
