@@ -6,7 +6,7 @@ puppet_nodes = [
   {
     :hostname => 'web',
     :ip => '127.0.0.1',
-    :box => 'slalompdx/centos-7.1-puppet',
+    :box => 'slalompdx/centos-7-puppet',
     :manifest => 'web.pp',
     :fwdguest => 80,
     :fwdhost => 3080,
@@ -15,7 +15,7 @@ puppet_nodes = [
    {
     :hostname => 'data',
     :ip => '127.0.0.1',
-    :box => 'slalompdx/centos-7.1-puppet',
+    :box => 'slalompdx/centos-7-puppet',
     :manifest => 'data.pp',
     :fwdguest => 4567,
     :fwdhost => 4567,
@@ -62,7 +62,7 @@ Vagrant.configure("2") do |config|
       node_config.librarian_puppet.destructive = false
 
       # Setup provider with params from node
-      node_config.vm.provider :vmware_fusion do |vb|
+      node_config.vm.provider "virtualbox" do |vb|
         vb.customize [
           'modifyvm', :id,
           '--name', node[:hostname],
